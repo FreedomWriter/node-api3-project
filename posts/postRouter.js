@@ -58,7 +58,6 @@ router.put("/:id", validatePostId, validatePost, (req, res) => {
 
 // works
 router.post("/", validatePost, (req, res) => {
-  console.log(`router.post: `, req.body);
   db.insert(req.body)
     .then(post => res.status(201).json({ success: true, post }))
     .catch(err => res.status(500).json({ success: false, message: err }));

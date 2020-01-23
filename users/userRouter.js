@@ -4,6 +4,8 @@ const router = express.Router();
 
 const db = require("./userDb");
 
+const postDb = require("../posts/postDb");
+
 const validateUser = props => (req, res, next) => {
   // do your magic!
   console.log(props);
@@ -33,16 +35,12 @@ router.post("/", validateUser("name"), (req, res) => {
 router.post("/:id/posts", validateUserId, validatePost, (req, res) => {
   // do your magic!
   const { id } = req.params;
-  console.log(`post: /:id: id: `, id);
-  console.log(`post: /:id: req.body: `, req.body);
-  db.insert(req.body).then(post =>
-    res
-      .status(200)
-      .json({ success: true, post })
-      .catch(err =>
-        res.status(500).json({ success: false, message: "Could not add post." })
-      )
-  );
+  postDb
+    .insert({ ...req.body, user_id: id })
+    .then(post => res.status(201).json({ success: true, post }))
+    .catch(err =>
+      res.status(500).json({ success: false, message: err.message })
+    );
 });
 
 //works
