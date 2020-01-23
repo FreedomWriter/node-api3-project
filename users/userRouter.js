@@ -113,8 +113,6 @@ function validateUserId(req, res, next) {
   const { id } = req.params;
   db.getById(id)
     .then(user => {
-      console.log(`validateUserId: user: `, user);
-      console.log(`validateUserId: id: `, id);
       if (typeof user === "object") {
         req.user = user;
         next();
@@ -123,7 +121,6 @@ function validateUserId(req, res, next) {
       }
     })
     .catch(err => {
-      console.log(err);
       res.status(500).json({ message: "Invalid user ID", err });
     });
 }
