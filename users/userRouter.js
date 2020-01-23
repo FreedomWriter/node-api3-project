@@ -31,7 +31,7 @@ router.post("/", validateUser("name"), (req, res) => {
     );
 });
 
-//does not work - errors are "Unhandled rejection Error: SQLITE_ERROR: table users has no column named text" I think I have a disconnect on what this is asking for.
+//works
 router.post("/:id/posts", validateUserId, validatePost, (req, res) => {
   // do your magic!
   const { id } = req.params;
